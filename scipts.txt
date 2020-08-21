@@ -1,0 +1,50 @@
+http://kawika.co.za/
+https://www.softcision.com/
+
+mkdir /var/www/html/kawika.co.za
+mkdir /var/www/html/softcision.com
+
+$ sudo nano /var/www/html/kawika.co.za/index.html
+<html>
+<title>kawika.co.za</title>
+<h1>Welcome to the kawika.co.za with Nginx webserver.</h1>
+</html>
+
+
+sudo nano /var/www/html/softcision.com/index.html
+<html>
+<title>softcision.com</title>
+<h1>Welcome to the softcision.com with Nginx webserver.</h1>
+</html>
+
+sudo chown -R www-data:www-data /var/www/html/kawika.co.za
+sudo chown -R www-data:www-data /var/www/html/softcision.com
+
+
+sudo nano /etc/nginx/sites-available/kawika.co.za.conf
+server {
+        listen 80;
+        root /var/www/html/kawika.co.za;
+        index index.html index.htm;
+        server_name kawika.co.za;
+
+   location / {
+       try_files $uri $uri/ =404;
+   }
+}
+
+
+sudo nano /etc/nginx/sites-available/softcision.com.conf
+server {
+        listen 80;
+        root /var/www/html/softcision.com;
+        index index.html index.htm;
+        server_name softcision.com;
+
+   location / {
+       try_files $uri $uri/ =404;
+   }
+}
+
+ln -s /etc/nginx/sites-available/kawika.co.za.conf /etc/nginx/sites-enabled/
+ln -s /etc/nginx/sites-available/softcision.com.conf /etc/nginx/sites-enabled/
